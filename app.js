@@ -7,41 +7,25 @@ let compCpt = 0;
 
 btnContainer.addEventListener('click', (e) => {
   const randNumber = Math.floor(Math.random() * 3 + 1);
-  console.log(randNumber);
+  console.log('Computer choice: ' + computerChoice(randNumber));
 
-  if (e.target.matches('#rock')) {
-    if (computerChoice(randNumber) === 'rock') {
-      resultSentence.innerText = "It's tie !";
-    } else if (computerChoice(randNumber) === 'paper') {
-      resultSentence.innerText = 'You lose ! paper beat rock.';
-      computerScore.innerText = ++compCpt;
-    } else if (computerChoice(randNumber) === 'scissors') {
-      resultSentence.innerText = 'You Win ! rock beat scissors.';
-      myScore.innerText = ++userCpt;
-    }
-  } else if (e.target.matches('#paper')) {
-    if (computerChoice(randNumber) === 'paper') {
-      resultSentence.innerText = "It's tie !";
-    } else if (computerChoice(randNumber) === 'rock') {
-      resultSentence.innerText = 'You Win ! paper beat rock.';
-      myScore.innerText = ++userCpt;
-    } else if (computerChoice(randNumber) === 'scissors') {
-      resultSentence.innerText = 'You lose ! scissors beat paper.';
-      computerScore.innerText = ++compCpt;
-    }
-  } else if (e.target.matches('#scissors')) {
-    if (computerChoice(randNumber) === 'scissors') {
-      resultSentence.innerText = "It's tie !";
-    } else if (computerChoice(randNumber) === 'rock') {
-      resultSentence.innerText = 'You lose ! rock beat scissors.';
-      computerScore.innerText = ++compCpt;
-    } else if (computerChoice(randNumber) === 'paper') {
-      resultSentence.innerText = 'You Win ! scissors beat paper.';
-      myScore.innerText = ++userCpt;
-    }
+  switch (e.target.id) {
+    case 'rock':
+      rockCondition(randNumber);
+      break;
+    case 'paper':
+      paperCondition(randNumber);
+      break;
+    case 'scissors':
+      scissorsCondition(randNumber);
+      break;
+
+    default:
+      break;
   }
 });
 
+//Computer choice
 function computerChoice(number) {
   let cptChoice;
   switch (number) {
@@ -61,4 +45,39 @@ function computerChoice(number) {
       break;
   }
   return cptChoice;
+}
+//Dynamical result
+function result(sentence, scorer = null, cpt = null) {
+  resultSentence.innerText = sentence;
+  if (scorer && cpt) {
+    scorer.innerText = cpt;
+  }
+}
+//Win/Lose Conditions
+function rockCondition(randNumber) {
+  if (computerChoice(randNumber) === 'rock') {
+    result("It's a tie !");
+  } else if (computerChoice(randNumber) === 'paper') {
+    result('You lose ! paper beat rock.', computerScore, ++compCpt);
+  } else if (computerChoice(randNumber) === 'scissors') {
+    result('You Win ! rock beat scissors', myScore, ++userCpt);
+  }
+}
+function paperCondition(randNumber) {
+  if (computerChoice(randNumber) === 'rock') {
+    result('You Win ! paper beat rock.', myScore, ++userCpt);
+  } else if (computerChoice(randNumber) === 'paper') {
+    result("It's a tie !");
+  } else if (computerChoice(randNumber) === 'scissors') {
+    result('You Lose ! paper beat rock.', computerScore, ++compCpt);
+  }
+}
+function scissorsCondition(randNumber) {
+  if (computerChoice(randNumber) === 'rock') {
+    result('You Lose ! rock beat scissors.', computerScore, ++compCpt);
+  } else if (computerChoice(randNumber) === 'paper') {
+    result('You Win ! scissors beat paper.', myScore, ++userCpt);
+  } else if (computerChoice(randNumber) === 'scissors') {
+    result("It's a tie");
+  }
 }
