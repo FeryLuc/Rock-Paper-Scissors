@@ -1,6 +1,9 @@
 const btnContainer = document.getElementById('btnContainer');
-const myScoreText = document.getElementById('myScore');
-const computerScoreText = document.getElementById('computerScore');
+const myScore = document.getElementById('myScore');
+const computerScore = document.getElementById('computerScore');
+const resultSentence = document.getElementById('result');
+let userCpt = 0;
+let compCpt = 0;
 
 btnContainer.addEventListener('click', (e) => {
   const randNumber = Math.floor(Math.random() * 3 + 1);
@@ -8,27 +11,33 @@ btnContainer.addEventListener('click', (e) => {
 
   if (e.target.matches('#rock')) {
     if (computerChoice(randNumber) === 'rock') {
-      alert("It's a Tie !!");
+      resultSentence.innerText = "It's tie !";
     } else if (computerChoice(randNumber) === 'paper') {
-      alert('You lose !');
+      resultSentence.innerText = 'You lose ! paper beat rock.';
+      computerScore.innerText = ++compCpt;
     } else if (computerChoice(randNumber) === 'scissors') {
-      alert('You Win !');
+      resultSentence.innerText = 'You Win ! rock beat scissors.';
+      myScore.innerText = ++userCpt;
     }
   } else if (e.target.matches('#paper')) {
     if (computerChoice(randNumber) === 'paper') {
-      alert("It's a Tie !!");
+      resultSentence.innerText = "It's tie !";
     } else if (computerChoice(randNumber) === 'rock') {
-      alert('You Win !');
+      resultSentence.innerText = 'You Win ! paper beat rock.';
+      myScore.innerText = ++userCpt;
     } else if (computerChoice(randNumber) === 'scissors') {
-      alert('You Lose!');
+      resultSentence.innerText = 'You lose ! scissors beat paper.';
+      computerScore.innerText = ++compCpt;
     }
   } else if (e.target.matches('#scissors')) {
     if (computerChoice(randNumber) === 'scissors') {
-      alert("It's a Tie !!");
+      resultSentence.innerText = "It's tie !";
     } else if (computerChoice(randNumber) === 'rock') {
-      alert('You Lose !');
+      resultSentence.innerText = 'You lose ! rock beat scissors.';
+      computerScore.innerText = ++compCpt;
     } else if (computerChoice(randNumber) === 'paper') {
-      alert('You Win !');
+      resultSentence.innerText = 'You Win ! scissors beat paper.';
+      myScore.innerText = ++userCpt;
     }
   }
 });
